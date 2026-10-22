@@ -106,7 +106,7 @@ x_scaled = (x_raw - x_mean) / x_std  # Correct numerator grouping
 # CRITICAL RULE FOR TEST/NEW DATA:
 # x_new_scaled = (x_new - x_mean) / x_std  <-- Always use training mean and std!
 
-
+ 
 #confusion 
 y_true = np.array([1, 0, 1, 1, 0, 0, 1, 0, 0, 1])
 y_pred = np.array([1, 0, 0, 1, 0, 1, 1, 0, 0, 0])
@@ -131,6 +131,34 @@ print(f"Accuracy: {accuracy:.2f}, Precision: {precision:.2f}, Recall: {recall:.2
 print("\n--- Scikit-Learn Classification Report ---")
 print(classification_report(y_true, y_pred, target_names=["Class 0", "Class 1"], zero_division=0))
 
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, classification_report
+
+# 1. Sample true labels and model predictions (e.g., 1 = Spam/Sick, 0 = Not Spam/Healthy)
+y_true = np.array([1, 0, 1, 1, 0, 0, 1, 0, 0, 1])
+y_pred = np.array([1, 0, 0, 1, 0, 1, 1, 0, 0, 0])
+
+# 2. Compute the Confusion Matrix array
+# Layout returned: [[TN, FP], 
+#                   [FN, TP]]
+cm = confusion_matrix(y_true, y_pred)
+print("Confusion Matrix Array:\n", cm)
+
+# 3. Display/Plot the Confusion Matrix visually using Matplotlib
+# display_labels maps index 0 and 1 to readable class names
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=["Class 0", "Class 1"])
+
+# Plot with a color map (e.g., "Blues", "Reds", "viridis")
+disp.plot(cmap="Blues")
+plt.title("Scikit-Learn Confusion Matrix")
+plt.show()
+
+# 4. Optional: Print the full classification report which uses the confusion matrix counts
+print("\nClassification Report:")
+print(classification_report(y_true, y_pred, target_names=["Class 0", "Class 1"], zero_division=0))
 
 #scikit
 print("\n--- Scikit-Learn Built-in Models ---")
